@@ -1,6 +1,7 @@
 require "httparty"
 require "nokogiri"
 require "selenium-webdriver"
+require "json"
 
 options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument("--headless") 
@@ -38,6 +39,15 @@ vagas.each do |vaga|
 
   puts "Cargo: #{cargo}"
   puts "Link: https://www.vagas.com.br#{link}"
+
+  File.open("vagas.json", "w") do |f|
+    f.write(JSON.pretty_generate(vagas.map do |vaga|
+      {
+        cargo: vaga.at_css("h2.cargo")&.text&.strip,
+        link: "https://www.vagas.com.br#{vaga.at_css("h2.cargo a.link-detalhes-vaga")&.[]("href")}"
+      }
+    end))
+end
 end
 
 driver.quit
