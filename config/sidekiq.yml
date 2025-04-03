@@ -1,3 +1,10 @@
+:concurrency: 5
+:queues:
+  - default
+
+:redis:
+  url: ENV['REDIS_URL']
+
 ScraperWorker:
   cron: "* * * * *"
   class: "ScraperWorker"
