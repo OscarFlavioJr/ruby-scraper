@@ -5,4 +5,5 @@ gem "httparty"
 gem "nokogiri"
 gem "selenium-webdriver"
 gem "sidekiq"
-gem "sidekiq-scheduler"
+gem 'sidekiq-cron'
+gem 'redis'
