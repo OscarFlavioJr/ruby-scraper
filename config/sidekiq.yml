@@ -1,0 +1,6 @@
+:schedule:
+  scraper_job:
+    cron: "*/10 * * * *"
+    class: ScraperWorker
+    queue: default
+    description: "Scrapes data from the website every hour"

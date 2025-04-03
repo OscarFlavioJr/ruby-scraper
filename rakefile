@@ -1,0 +1,15 @@
+require 'rake'
+require 'sidekiq'
+require 'sidekiq-scheduler/web'
+require_relative 'scraper-worker'
+
+namespace :scraper do
+    desc "Executa o trabalho de scraping"
+    task :run do
+        puts "Iniciando o trabalho de scraping..."
+        ScraperWorker.perform_async
+        puts "Scraping concluído!"
+    end
+end
+
+##rodar com: bundle exec sidekiq -C config/sidekiq.yml -r ./scraper-worker.rb

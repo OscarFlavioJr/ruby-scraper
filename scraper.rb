@@ -29,17 +29,16 @@ html = driver.page_source
 document = Nokogiri::HTML(html)
 
 num_vagas = document.at_css("div.faixa.clearfix h1")&.text&.strip
-puts "#{num_vagas} disponíveis, sendo elas:"
 
 vagas = document.css("div.informacoes-header")
 
 vagas.each do |vaga|
   cargo = vaga.at_css("h2.cargo")&.text&.strip
   link = vaga.at_css("h2.cargo a.link-detalhes-vaga")&.[]("href")
-
+  
   puts "Cargo: #{cargo}"
   puts "Link: https://www.vagas.com.br#{link}"
-
+  
   File.open("vagas.json", "w") do |f|
     f.write(JSON.pretty_generate(vagas.map do |vaga|
       {
@@ -47,7 +46,8 @@ vagas.each do |vaga|
         link: "https://www.vagas.com.br#{vaga.at_css("h2.cargo a.link-detalhes-vaga")&.[]("href")}"
       }
     end))
-end
+  end
 end
 
+puts "#{num_vagas} disponíveis"
 driver.quit
